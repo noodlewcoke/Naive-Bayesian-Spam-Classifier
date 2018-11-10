@@ -21,11 +21,10 @@ def bernoulli_nbc(doc, ham, spam, n_ham, n_spam, dic):
             p_ham *= (1-p_h)
             p_spam *= (1-p_s)
     t = max(p_ham, p_spam)
-    if t==p_ham:
+    if t == p_ham:
         return 'ham'
-    elif t==p_spam:
+    elif t == p_spam:
         return 'spam'
-
 
 
 if __name__ == "__main__":
@@ -36,7 +35,7 @@ if __name__ == "__main__":
     data = raw_data.split('\n')
     dic = re.findall(r"[\w']+", raw_data)
 
-    #k-fold cross validation
+    # k-fold cross validation
     fold_size = 100
     acc = list()
 
@@ -45,14 +44,14 @@ if __name__ == "__main__":
         train_data = data[0:i] + data[(i+fold_size):]
         if len(test_data)<30:
             break
-        #Bernoulli Naive Bayesian distributions
+        # Bernoulli Naive Bayesian distributions
         ham_ber, _, spam_ber, _, n_ham, n_spam = distributer(train_data)
         f_acc = list()
         for t in test_data:
             row = re.findall(r"[\w']+", t)
             truth = row[0]
             c_map = bernoulli_nbc(row[1:], ham_ber, spam_ber, n_ham, n_spam, dic)
-            if c_map==truth:
+            if c_map == truth:
                 f_acc.append(1)
                 acc.append(1)
             else:

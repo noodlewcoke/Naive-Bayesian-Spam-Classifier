@@ -28,37 +28,37 @@ def distributer(data):
     n_ham, n_spam = 0, 0
     for i,row in enumerate(data):
         d = re.findall(r"[\w']+", row)
-        if d[0]=='ham':
+        if d[0] == 'ham':
             n_ham += 1
 
             for j in set(d[1:]):
-                if not j in ham_multi.keys(): 
-                    ham_multi[j]=0
+                if j in ham_multi.keys():
+                    ham_multi[j] += 1
                 else:
-                    ham_multi[j]+=1
-                if not j in ham_ber.keys():
-                    ham_ber[j]=1
-                else:
+                    ham_multi[j] = 0
+                if j in ham_ber.keys():
                     ham_ber[j] += 1
-                if not j in spam_multi.keys(): 
-                    spam_multi[j]=0
-                if not j in spam_ber.keys():
-                    spam_ber[j]=0
-        elif d[0]=='spam':
+                else:
+                    ham_ber[j] = 1
+                if j not in spam_multi.keys():
+                    spam_multi[j] = 0
+                if j not in spam_ber.keys():
+                    spam_ber[j] = 0
+        elif d[0] == 'spam':
             n_spam += 1
             for j in set(d[1:]):
-                if not j in spam_multi.keys(): 
-                    spam_multi[j]=0
+                if j in spam_multi.keys():
+                    spam_multi[j] += 1
                 else:
-                    spam_multi[j]+=1
-                if not j in spam_ber.keys():
-                    spam_ber[j]=1
-                else:
+                    spam_multi[j] = 0
+                if j in spam_ber.keys():
                     spam_ber[j] += 1
-                if not j in ham_multi.keys(): 
-                    ham_multi[j]=0
-                if not j in ham_ber.keys():
-                    ham_ber[j]=0
+                else:
+                    spam_ber[j] = 1
+                if j not in ham_multi.keys():
+                    ham_multi[j] = 0
+                if j not in ham_ber.keys():
+                    ham_ber[j] = 0
     return ham_ber, ham_multi, spam_ber, spam_multi, n_ham, n_spam
     #     else:
     #         print('Incorrect ifelse for row: {}'.format(row))
